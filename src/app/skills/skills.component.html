@@ -1,0 +1,88 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">SKILLS</h5>
+          <p class="category">Handcrafted by our friends from
+            <a href="https://nucleoapp.com/?ref=1712">NucleoApp</a>
+          </p>
+
+        </div>
+        <div class="card-body all-icons">
+          <div class="row">
+
+            <form [formGroup]="skillForm">
+              <div class="row">
+                <div class="col-lg-5 ml-auto mr-auto">
+                  <div class="form-group">
+                    <label>New Skill </label>
+                    <input type="text" class="form-control" placeholder="Admin" value="name" name="name"
+                      formControlName="name">
+                    <label class="image-upload-container btn btn-bwm">
+                      <span>Select Image</span>
+                      <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+                    </label>
+                    <div *ngIf="selectedFile" class="img-preview-container">
+
+                      <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+                           [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+                      </div>
+                    
+                      <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+                        <div class="img-spinning-circle"></div>
+                      </div>
+                    
+                      <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+                      <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <button type="button" class="btn btn-danger" (click)="addSkill()">Submit</button>
+                </div>
+
+
+              </div>
+
+
+            </form>
+
+          </div>
+        </div>
+
+        <div class="card-body all-icons">
+          <ul class="row">
+
+
+            <li *ngFor="let menuItem of listJson" class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+
+              <div class="font-icon-detail">
+                <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+                <img src={{imgurl}} alt='image'>
+                <p>{{menuItem}}</p>
+
+              </div>
+              <td class="td-actions text-right">
+                <button type="button" rel="tooltip" title=""
+                  class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+                  <i class="now-ui-icons ui-2_settings-90"></i>
+                </button>
+                <button type="button" rel="tooltip" title=""
+                  class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+              </td>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

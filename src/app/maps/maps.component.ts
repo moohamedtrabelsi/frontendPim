@@ -19,7 +19,7 @@ export class MapsComponent implements OnInit {
 
   ngOnInit() {
 
-    var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+   /* var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
     var mapOptions = {
         zoom: 13,
         center: myLatlng,
@@ -120,6 +120,8 @@ export class MapsComponent implements OnInit {
 
     // To add the marker to the map, call setMap();
     marker.setMap(map);
+
+    */
   }
 
 }
