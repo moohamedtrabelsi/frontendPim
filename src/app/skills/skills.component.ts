@@ -23,15 +23,17 @@ export class SkillsComponent implements OnInit {
   selectedFile: ImageSnippet;
   skillForm : FormGroup;
   skill:Skill;
-
-  skills:Skill[];
+  filled:Boolean;
+  skills:Skill[]=[];
   listJson : any=[];
   base64Image: any;
-  imgurl:any='http://127.0.0.1:3000/api/image/file.jpg'
+  imgurl:any='http://192.168.1.20:3000/api/image/java-wallpapers.jpg'
 
   constructor(private service : SkillService , private route: Router) { }
 
   ngOnInit(): void {
+    
+    this.filled=false;
     this.skill = new Skill();
 
     let imageUrl = '127.0.0.1:3000/api/image/file';
@@ -44,20 +46,20 @@ export class SkillsComponent implements OnInit {
     //this.skills =  new Array();
 
     this.skillForm = new FormGroup({
-      name : new FormControl(),
+      name : new FormControl( '',Validators.required ),
     });
 
-    this.getSkills();
-      //(res:Skill[])=>this.skills=res );
-
-
-     //console.log(this.skills.);
-    
+    this.getSkills();    
+  }
+  get name(){
+    return this.skillForm.get('name');
   }
 
   private onSuccess() {
     this.selectedFile.pending = false;
     this.selectedFile.status = 'ok';
+    this.filled = true;
+    
   }
 
   private onError() {
@@ -75,12 +77,15 @@ export class SkillsComponent implements OnInit {
 
       this.selectedFile.pending = true;
       this.service.uploadImage(this.selectedFile.file).subscribe(
-        (res) => {
+       /* (res) => {
           this.onSuccess();
         },
         (err) => {
           this.onError();
-        })
+        }*/
+       res=>{ this.onSuccess();}
+        ),
+        err=>{this.onError}
     });
 
     reader.readAsDataURL(file);
@@ -119,12 +124,19 @@ export class SkillsComponent implements OnInit {
 
 
 addSkill(){
+  if(this.filled == true){
   Object.assign(this.skill , this.skillForm.value);
   this.service.addSkill(this.skill).subscribe(
-    res=>console.log(this.skill.name),
+    res=>{console.log(this.skill.name),
     this.listJson.push(this.skill.name),
+    this.skill.filename = this.selectedFile.src
+    this.skills.push(this.skill)
+    }
   );
+  this.filled =false;
+
   //this.route.navigate(['dashboard']);
+  }
 
 }
   getSkills() {
@@ -133,11 +145,15 @@ addSkill(){
     data => 
     {
       for (const d of (data as any)) {
-        this.listJson.push(
+       var skil = new Skill();
+       skil.name=d.name;
+       skil.filename='http://localhost:3000/api/image/'+ d.filename + '' ;
+        this.skills.push(skil);
+       /* this.listJson.push(
            d.name
-        );
+        );*/
       }
-      console.log(this.listJson);
+      console.log(this.skills);
     });
 
 }

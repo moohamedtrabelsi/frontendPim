@@ -15,7 +15,7 @@ export const ExpertLayoutRoutes: Routes = [
     { path: 'profile-expert',   component: ProfileExpertComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
-    { path: 'skills',          component: SkillsComponent },
+    { path: 'skills',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent }
